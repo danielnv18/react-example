@@ -1,0 +1,20 @@
+.App {
+  text-align: center;
+}
+
+.App .green {
+	background: green;
+}
+
+.App .red {
+	background: red;
+}
+.App .grey {
+	background: #ccc;
+}
+
+span {
+  padding: 8px;
+  display: inline-block;
+  margin: 8px;
+}
