@@ -25,16 +25,22 @@ class App extends Component {
     this.renderWord = this.renderWord.bind(this);
 	}
 
+  /**
+   * Each time there is a new value.
+   * @param {object} e
+   */
 	handleChange(e) {
     const value = e.target.value;
     const currentIndex = this.state.currentIndex;
     const currentWord = this.state.paragraph[currentIndex].word
 
+    // The value match the word.
     if (value === currentWord) {
       this.resetInput(true);
       return false
     }
 
+    // If the user types and space then jump to the next item.
 		if (value.indexOf(' ') >= 0) {
       this.resetInput(false);
 		}
@@ -45,6 +51,10 @@ class App extends Component {
 		}
   }
 
+  /**
+   * Reset the input value and go to the next item
+   * @param {bolean} newStatus
+   */
   resetInput(newStatus) {
     let _paragraph = this.state.paragraph.slice()
     _paragraph[this.state.currentIndex].isCorrect = newStatus;
@@ -54,12 +64,18 @@ class App extends Component {
     });
   }
 
+  /**
+   * Render each word
+   * @param {object} item
+   * @param {int} key
+   */
   renderWord(item, key) {
     let _class = '';
     const currentIndex = this.state.currentIndex;
     const currentGuess = this.state.currentGuess;
 
     if (key <= currentIndex) {
+      // gray only if the current word is no erros.
       if (currentIndex === key && item.word.startsWith(currentGuess)) {
         _class = 'grey';
       }
