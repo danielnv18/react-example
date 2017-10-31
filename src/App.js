@@ -5,8 +5,8 @@ import './App.css';
 
 class App extends Component {
 
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 
 		const words = randomWords(20).map(word => {
 			return {
@@ -72,8 +72,7 @@ class App extends Component {
    */
   renderWord(item, key) {
     let _class = '';
-    const currentIndex = this.state.currentIndex;
-    const currentGuess = this.state.currentGuess;
+    const { currentIndex, currentGuess } = this.state;
 
     if (key <= currentIndex) {
       _class = className({
