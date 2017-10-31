@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import randomWords from 'random-words';
+import className from 'classnames';
 import './App.css';
 
 class App extends Component {
@@ -75,16 +76,11 @@ class App extends Component {
     const currentGuess = this.state.currentGuess;
 
     if (key <= currentIndex) {
-      // gray only if the current word is no erros.
-      if (currentIndex === key && item.word.startsWith(currentGuess)) {
-        _class = 'grey';
-      }
-      else if (item.isCorrect) {
-        _class = 'green';
-      }
-      else {
-        _class = 'red';
-      }
+      _class = className({
+        'grey': currentIndex === key && item.word.startsWith(currentGuess),
+        'green': item.isCorrect,
+        'red': !item.isCorrect
+      })
     }
 
     return <span key={key} className={_class}>{item.word}</span>
