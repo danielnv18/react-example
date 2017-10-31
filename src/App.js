@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import randomWords from 'random-words';
 import className from 'classnames';
+import { fromJS } from 'immutable';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +9,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
-		const words = randomWords(20).map(word => {
+		const words = randomWords(2).map(word => {
 			return {
 				"word": word,
 				"isCorrect": false
@@ -16,7 +17,7 @@ class App extends Component {
 		})
 
 		this.state = {
-			"paragraph": words,
+			"paragraph": fromJS(words),
       "currentGuess": "",
       "currentIndex": 0
 		}
@@ -33,7 +34,7 @@ class App extends Component {
 	handleChange(e) {
     const value = e.target.value;
     const currentIndex = this.state.currentIndex;
-    const currentWord = this.state.paragraph[currentIndex].word
+    const currentWord = this.state.paragraph.getIn([currentIndex, 'word']);
 
     // The value match the word.
     if (value === currentWord) {
@@ -57,10 +58,11 @@ class App extends Component {
    * @param {bolean} newStatus
    */
   resetInput(newStatus) {
-    let _paragraph = this.state.paragraph.slice()
-    _paragraph[this.state.currentIndex].isCorrect = newStatus;
+    const _paragraph = this.state.paragraph.setIn([this.state.currentIndex,'isCorrect'], newStatus);
+
     this.setState({
       "currentGuess": "",
+      "paragraph": _paragraph,
       "currentIndex" : this.state.currentIndex + 1
     });
   }
@@ -76,13 +78,13 @@ class App extends Component {
 
     if (key <= currentIndex) {
       _class = className({
-        'grey': currentIndex === key && item.word.startsWith(currentGuess),
-        'green': item.isCorrect,
-        'red': !item.isCorrect
+        'grey': currentIndex === key && item.get('word').startsWith(currentGuess),
+        'green': item.get('isCorrect'),
+        'red': !item.get('isCorrect')
       })
     }
 
-    return <span key={key} className={_class}>{item.word}</span>
+    return <span key={key} className={_class}>{item.get('word')}</span>
   }
 
   render() {

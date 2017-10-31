@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
+    "immutable": "^3.8.2",
     "random-words": "^0.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
