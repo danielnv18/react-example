@@ -9,7 +9,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
-		const words = randomWords(2).map(word => {
+		const words = randomWords(20).map(word => {
 			return {
 				"word": word,
 				"isCorrect": false
@@ -88,14 +88,18 @@ class App extends Component {
   }
 
   render() {
+    const {currentIndex, paragraph} = this.state
     return (
       <div className="App">
         <div>{this.state.paragraph.map((this.renderWord))}</div>
 				<div>
-					<input
+          { currentIndex < paragraph.count() ?
+          <input
 						type="text"
 						value={this.state.currentGuess}
-						onChange={this.handleChange}/></div>
+						onChange={this.handleChange}/> : null
+          }
+					</div>
 				<p>{this.state.currentGuess}</p>
       </div>
     );
